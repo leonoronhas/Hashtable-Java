@@ -19,5 +19,10 @@ public class MyHashtableArray {
 
         System.out.println("Retrieve key Leo: " + ht.get("Leo"));
 
+        ht.remove("Leo");
+
+        System.out.println("Hashtable after the remove: ");
+        ht.printHashtable();
+
     }
 }

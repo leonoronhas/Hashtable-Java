@@ -43,6 +43,26 @@ public class HashtableArray {
         return hashtable[hashedKey].employee;
     }
 
+    public Employee remove(String key) {
+        int hashedkey = findKey(key);
+        if (hashedkey == -1) {
+            return null;
+        }
+        Employee employee = hashtable[hashedkey].employee;
+        hashtable[hashedkey] = null;
+
+        StoredEmployee[] oldHashtable = hashtable;
+        hashtable = new StoredEmployee[oldHashtable.length];
+
+        for (int i = 0; i < oldHashtable.length; i++) {
+            if (oldHashtable[i] != null) {
+                put(oldHashtable[i].key, oldHashtable[i].employee);
+            }
+        }
+
+        return employee;
+    }
+
     private int hashKey(String key) {
         return key.length() % hashtable.length;
     }
@@ -68,10 +88,11 @@ public class HashtableArray {
             hashedKey = (hashedKey + 1) % hashtable.length;
         }
 
-        if (stopIndex == hashedKey) {
-            return -1;
-        } else {
+        if (hashtable[hashedKey] != null &&
+                hashtable[hashedKey].key.equals(key)) {
             return hashedKey;
+        } else {
+            return -1;
         }
     }
 
